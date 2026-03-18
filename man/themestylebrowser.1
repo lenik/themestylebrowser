@@ -1,0 +1,40 @@
+.\" Copyright (C) 2026 Lenik
+.\" This is free documentation; you can redistribute it and/or modify it
+.\" under the terms of the GNU Affero General Public License as published by
+.\" the Free Software Foundation.
+.TH THEMESTYLEBROWSER 1 "2026-03-18" "themestylebrowser 1.0.0" "User Commands"
+.SH NAME
+themestylebrowser \- browse theme/style icon libraries
+.SH SYNOPSIS
+.B themestylebrowser
+[\fIOPTIONS\fR]
+[\fIlibrarydir\fR]
+.SH DESCRIPTION
+.B themestylebrowser
+(tsb) is a graphical browser for icon libraries organized by theme/style and
+package. The library root directory must contain a
+.I \.themestyles
+file that lists theme/style paths (e.g. flex/regular, pixel). Under each
+theme/style directory, package directories (e.g. computer, travel) contain
+image files.
+.PP
+The UI shows a package tree on the left (with file and item counts per node)
+and a file list on the right with columns for each themestyle. You can sort by
+name, count, or size from the View menu; open image or item property dialogs
+(double-click); and copy paths or code snippets from the dialogs.
+.SH OPTIONS
+.TP
+\fIlibrarydir\fR
+Optional path to the library root (directory containing \.themestyles). If
+omitted, use File \fB\->\fR Open library to choose a directory.
+.SH FILES
+.TP
+.I \.themestyles
+In the library root. One theme/style per line (e.g. flex/regular, pixel).
+Lines starting with # and blank lines are ignored.
+.SH SEE ALSO
+.BR wx (3)
+.SH AUTHOR
+Lenik
+.SH LICENSE
+AGPL-3.0-or-later (with Anti-AI restriction: no use for training/fine-tuning/evaluating ML or AI systems).

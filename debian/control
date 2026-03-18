@@ -1,0 +1,39 @@
+Source: themestylebrowser
+Section: graphics
+Priority: optional
+Maintainer: Lenik <themestylebrowser@bodz.net>
+Build-Depends:
+ debhelper-compat (= 13),
+ meson,
+ ninja-build,
+ pkg-config,
+ libbas-c-dev,
+ libbas-cpp-dev,
+ libbas-ui-dev,
+ libwxgtk3.2-dev
+    | libwxgtk3.0-gtk3-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/example/themestylebrowser
+Vcs-Browser: https://github.com/example/themestylebrowser
+Vcs-Git: https://github.com/example/themestylebrowser.git
+
+Package: themestylebrowser
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+ libbas-c0,
+ libbas-cpp0,
+ libbas-ui0,
+ libwxgtk3.2-1t64
+     | libwxgtk3.2-1
+     | libwxgtk3.0-gtk3-0v5
+Description: Theme style icon library browser
+ Theme Style Browser (tsb) browses icon libraries organized by
+ theme/style and package. The library root contains a .themestyles
+ file listing theme/style directories (e.g. flex/regular, pixel).
+ .
+ The UI shows a package tree on the left and a file list on the right
+ with columns per themestyle. Supports sorting by name, count, or size,
+ image thumbnails, and property dialogs with path/code snippet copy.

@@ -1,0 +1,8 @@
+themestylebrowser (1.0.0) testing; urgency=medium
+
+  * Initial release.
+  * Browse theme/style icon libraries with package tree and file grid.
+  * View menu: sort by name, count, or size.
+  * Image and item property dialogs with code snippets.
+
+ -- Lenik (谢继雷) <themestylebrowser@bodz.net>  Wed, 18 Mar 2026 12:00:00 +0000

@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Debian rules for themestylebrowser (meson build)
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	meson setup build --prefix=/usr -Dbuildtype=release
+
+override_dh_auto_build:
+	meson compile -C build
+
+override_dh_auto_install:
+	dh_auto_install --
+	install -d debian/themestylebrowser/usr/share/man/man1
+	install -m 644 man/themestylebrowser.1 debian/themestylebrowser/usr/share/man/man1/
+
+override_dh_auto_clean:
+	rm -rf build
