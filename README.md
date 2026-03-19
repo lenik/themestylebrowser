@@ -42,6 +42,16 @@ pixel
 - **Column header:** left-click Name/Count/Size to sort; right-click Name for themestyle column visibility.
 - **Double-click** filename → Item property; double-click icon cell → Image property (path/code snippets, Copy).
 
+## Screenshots
+
+| Main window | Maximized |
+|-------------|-----------|
+| ![Main window](screenshots/window.png) | ![Maximized](screenshots/maximized.png) |
+
+| Icon grid | Item / Image properties |
+|-----------|-------------------------|
+| ![Icon grid 1](screenshots/icongrid1.png) ![Icon grid 2](screenshots/icongrid2.png) | ![Item properties](screenshots/item-properties.png) ![Image properties](screenshots/image-properties.png) |
+
 ## Build
 
 - **Dependencies:** meson, ninja, pkg-config, libbas-c, libbas-cpp, libbas-ui, wxWidgets (GTK3).

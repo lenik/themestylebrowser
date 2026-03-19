@@ -159,7 +159,7 @@ void TSBCore::createFragmentView(CreateViewContext* ctx) {
     m_grid = new wxGrid(m_right_panel, ID_GRID, wxDefaultPosition, wxDefaultSize, wxWANTS_CHARS);
     m_grid->CreateGrid(1, 1);
     m_grid->EnableGridLines(true);
-    m_grid->SetColLabelSize(44);
+    m_grid->SetColLabelSize(52);  // allow 2-line wrapped headers for style columns
     m_grid->SetRowLabelSize(40);
     m_grid->SetScrollbars(1, 1, 1, 1);
     m_grid->Bind(wxEVT_GRID_CELL_LEFT_DCLICK, &TSBCore::onGridCellLeftDClick, this);
@@ -387,14 +387,16 @@ void TSBCore::refreshFileList() {
         m_grid->SetColSize(COL_COUNT, 50);
         m_grid->SetColSize(COL_SIZE, 70);
         for (int c = 3; c < cols; ++c)
-            m_grid->SetColSize(c, 44);
+            m_grid->SetColSize(c, 56);  // width for wrapped style header (e.g. "flex\nregular")
     }
     m_grid->SetColLabelValue(COL_NAME, "Name");
     m_grid->SetColLabelValue(COL_COUNT, "Count");
     m_grid->SetColLabelValue(COL_SIZE, "Size");
-    for (size_t i = 0; i < m_visible_styles.size(); ++i)
-        m_grid->SetColLabelValue(COL_STYLE_BASE + static_cast<int>(i),
-                                 wxString::FromUTF8(m_visible_styles[i].c_str()));
+    for (size_t i = 0; i < m_visible_styles.size(); ++i) {
+        wxString label = wxString::FromUTF8(m_visible_styles[i].c_str());
+        label.Replace("/", "\n", true);  // word-wrap style ids like "flex/regular" in header
+        m_grid->SetColLabelValue(COL_STYLE_BASE + static_cast<int>(i), label);
+    }
     m_grid->SetColLabelAlignment(wxALIGN_LEFT, wxALIGN_CENTER);
     m_grid->EnableCellEditControl(false);
     for (int c = COL_STYLE_BASE; c < cols; ++c) {
