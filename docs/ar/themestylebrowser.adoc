@@ -1,0 +1,44 @@
+= themestylebrowser(1)
+{project-author} <{project-email}>
+v{project-version}, {project-year}
+:doctype: manpage
+:manmanual: User Commands
+:mansource: themestylebrowser
+:man-linkstyle: blue R <>
+:nofooter:
+
+== NAME
+
+themestylebrowser - browse theme/style icon libraries
+
+== SYNOPSIS
+
+*themestylebrowser* [_OPTIONS_] [_librarydir_]
+
+== DESCRIPTION
+
+*themestylebrowser* (tsb) is a graphical browser for icon libraries organized by theme/style and package. The library root directory must contain a _.themestyles_ file that lists theme/style paths (e.g. flex/regular, pixel). Under each theme/style directory, package directories (e.g. computer, travel) contain image files.
+
+The UI shows a package tree on the left (with file and item counts per node) and a file list on the right with columns for each themestyle. You can sort by name, count, or size from the View menu; open image or item property dialogs (double-click); and copy paths or code snippets from the dialogs.
+
+== OPTIONS
+
+_librarydir_::
+  Optional path to the library root (directory containing .themestyles). If omitted, use File *->* Open library to choose a directory.
+
+== FILES
+
+_.themestyles_::
+  In the library root. One theme/style per line (e.g. flex/regular, pixel). Lines starting with # and blank lines are ignored.
+
+== SEE ALSO
+
+*wx*(3)
+
+== AUTHOR
+
+Lenik
+
+== LICENSE
+
+AGPL-3.0-or-later (with Anti-AI restriction: no use for training/fine-tuning/evaluating ML or AI systems).

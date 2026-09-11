@@ -39,8 +39,7 @@ class TSBCore : public UIFragment {
     void refreshLibrary();
     wxBitmap loadThumbnail(const std::string& path, int size = 32);
 
-    void createFragmentView(CreateViewContext* ctx) override;
-    wxEvtHandler* getEventHandler() override;
+    wxWindow* createFragmentView(CreateViewContext* ctx) override;
 
   private:
     void onOpenLibrary(PerformContext*);

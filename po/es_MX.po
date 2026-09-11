@@ -1,0 +1,199 @@
+# Spanish translations for themestylebrowser package
+# Traducciones al español para el paquete themestylebrowser.
+# Copyright (C) 2026 Lenik
+# This file is distributed under the same license as the themestylebrowser package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: themestylebrowser 1.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-11 17:00+0800\n"
+"PO-Revision-Date: 2026-09-11 17:00+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es_MX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/main.cpp:32
+msgid "Theme Style Browser"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:102
+msgid "Sort by &Name"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:103
+msgid "Tree and file list by name ascending (default)"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:105
+msgid "Sort by &Count"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:106
+msgid "Tree by item/file count descending, list by file count descending"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:108
+msgid "Sort by &Size"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:109
+msgid "Tree and file list by size descending"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:118
+msgid "&Open library...\tCtrl+O"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:119
+msgid "Open theme style library root"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:123
+msgid "E&xit\tAlt+F4"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:123
+msgid "Quit"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:129
+msgid "&Sort"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:130
+msgid "Sort order for tree and file list"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:161 src/tsb/TSBFrame.cpp:279
+msgid "Library"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:202
+msgid "Failed to load library. Ensure the directory contains .themestyles and theme/style folders."
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:204
+msgid "Error"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:211
+msgid "Theme Style Browser - "
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:395
+msgid "Name"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:396
+msgid "Count"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:397
+msgid "Size"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:506
+msgid "Delete item group"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:507
+msgid "Rename item (F2)"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:513
+msgid "Delete image"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:547
+#, c-format
+msgid "Hide column '%s'"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:590
+msgid "Select library root (directory containing .themestyles)"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:606
+msgid "Delete image: not implemented yet."
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:606 src/tsb/TSBFrame.cpp:610 src/tsb/TSBFrame.cpp:614
+msgid "Info"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:610
+msgid "Delete item group: not implemented yet."
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:614
+msgid "Rename item: not implemented yet (F2)."
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:620
+msgid "Image Property"
+msgstr ""
+
+#: src/tsb/TSBFrame.cpp:628
+msgid "Item Property"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:30
+#, c-format
+msgid "%lld bytes"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:40 src/tsb/ItemProperties.cpp:47
+msgid "Path Info:"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:44 src/tsb/ImageProperties.cpp:51
+#: src/tsb/ImageProperties.cpp:71 src/tsb/ItemProperties.cpp:51
+#: src/tsb/ItemProperties.cpp:73
+msgid "Copy"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:47
+msgid "Theme Style:"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:55 src/tsb/ItemProperties.cpp:55
+msgid "Code Snippets:"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:57 src/tsb/ItemProperties.cpp:57
+msgid "bas-ui icon ImageSet"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:75 src/tsb/ItemProperties.cpp:77
+msgid "OK"
+msgstr ""
+
+#: src/tsb/ImageProperties.cpp:76 src/tsb/ItemProperties.cpp:78
+msgid "Close"
+msgstr ""
+
+#: src/tsb/ItemProperties.cpp:34
+#, c-format
+msgid "%d styles in %zu formats: %s"
+msgstr ""
+
+#: src/tsb/ItemProperties.cpp:38
+#, c-format
+msgid "%.1f M total"
+msgstr ""
+
+#: src/tsb/ItemProperties.cpp:40
+#, c-format
+msgid "%.1f k total"
+msgstr ""
+
+#: src/tsb/ItemProperties.cpp:42
+#, c-format
+msgid "%lld total"
+msgstr ""

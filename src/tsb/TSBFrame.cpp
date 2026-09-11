@@ -3,6 +3,7 @@
 #include "ImageProperties.hpp"
 #include "ItemProperties.hpp"
 
+#include <bas/locale/i18n.h>
 #include <bas/ui/arch/ImageSet.hpp>
 #include <bas/ui/arch/UIState.hpp>
 #include <bas/wx/images.hpp>
@@ -29,6 +30,10 @@
 #include <wx/stattext.h>
 
 namespace tsb {
+
+namespace {
+wxString tr(const char* msgid) { return wxString::FromUTF8(_(msgid)); }
+} // namespace
 
 struct TreeItemData : wxTreeItemData {
     explicit TreeItemData(std::string seg) : segment(std::move(seg)) {}
@@ -94,14 +99,14 @@ constexpr const char* k_stream_dev = "streamline-vectors/core/pop/computer-devic
 } // namespace
 
 UIStateValueDescriptor TSBCore::s_sortMethods[3] = {
-    {.label = "Sort by &Name",
-     .description = "Tree and file list by name ascending (default)",
+    {.label = N_("Sort by &Name"),
+     .description = N_("Tree and file list by name ascending (default)"),
      .icon = ImageSet(wxART_GO_UP, k_stream_if, "ascending-number-order.svg")},
-    {.label = "Sort by &Count",
-     .description = "Tree by item/file count descending, list by file count descending",
+    {.label = N_("Sort by &Count"),
+     .description = N_("Tree by item/file count descending, list by file count descending"),
      .icon = ImageSet(wxART_GO_DOWN, k_stream_if, "descending-number-order.svg")},
-    {.label = "Sort by &Size",
-     .description = "Tree and file list by size descending",
+    {.label = N_("Sort by &Size"),
+     .description = N_("Tree and file list by size descending"),
      .icon = ImageSet(wxART_CDROM, k_stream_dev, "hard-disk.svg")},
 };
 
@@ -110,23 +115,28 @@ TSBCore::TSBCore() {
     std::string stream_travel = "streamline-vectors/core/pop/map-travel";
 
     int seq = 0;
-    action(ID_OPEN_LIBRARY, "file", "open_library", seq++, "&Open library...\tCtrl+O",
-           "Open theme style library root")
+    action(ID_OPEN_LIBRARY, "file", "open_library", seq++, _("&Open library...\tCtrl+O"),
+           _("Open theme style library root"))
         .icon(wxART_FOLDER_OPEN, stream_if, "open-book.svg")
         .performFn([this](PerformContext*) { onOpenLibrary(nullptr); })
         .install();
-    action(wxID_EXIT, "file", "exit", seq++, "E&xit\tAlt+F4", "Quit")
+    action(wxID_EXIT, "file", "exit", seq++, _("E&xit\tAlt+F4"), _("Quit"))
         .icon(wxART_CROSS_MARK, stream_travel, "emergency-exit.svg")
         .performFn([this](PerformContext*) { onExit(nullptr); })
         .install();
 
     seq = 0;
-    state(ID_SORT_METHOD, "view", "sort_method", seq++, "&Sort",
-          "Sort order for tree and file list")
+    state(ID_SORT_METHOD, "view", "sort_method", seq++, _("&Sort"),
+          _("Sort order for tree and file list"))
         .icon(wxART_GO_DOWN, stream_if, "sort-descending.svg")
         .stateType(UIStateType::ENUM)
         .enumValues({SORT_NAME, SORT_COUNT, SORT_SIZE})
-        .valueDescriptorFn([this](int value) { return s_sortMethods[value]; })
+        .valueDescriptorFn([](int value) {
+            UIStateValueDescriptor d = s_sortMethods[value];
+            d.label = _(d.label.c_str());
+            d.description = _(d.description.c_str());
+            return d;
+        })
         .initValue(SORT_NAME)
         .connect([this](UIStateVariant const value, UIStateVariant const) {
             SortMethod method = static_cast<SortMethod>(std::get<int>(value));
@@ -140,7 +150,7 @@ TSBCore::TSBCore() {
         .install();
 }
 
-void TSBCore::createFragmentView(CreateViewContext* ctx) {
+wxWindow* TSBCore::createFragmentView(CreateViewContext* ctx) {
     m_contentParent = ctx->getParent();
     const wxPoint& pos = ctx->getPos();
     const wxSize& size = ctx->getSize();
@@ -148,7 +158,7 @@ void TSBCore::createFragmentView(CreateViewContext* ctx) {
     m_splitter = new wxSplitterWindow(m_contentParent, wxID_ANY, pos, size, wxSP_3D);
     m_tree = new wxTreeCtrl(m_splitter, ID_TREE, wxDefaultPosition, wxDefaultSize,
                             wxTR_DEFAULT_STYLE | wxTR_HIDE_ROOT | wxTR_SINGLE);
-    m_tree->AddRoot("Library");
+    m_tree->AddRoot(tr("Library"));
     wxImageList* treeIcons = new wxImageList(16, 16);
     treeIcons->Add(wxArtProvider::GetBitmap(wxART_FOLDER, wxART_OTHER, wxSize(16, 16)));
     treeIcons->Add(wxArtProvider::GetBitmap(wxART_FOLDER_OPEN, wxART_OTHER, wxSize(16, 16)));
@@ -183,30 +193,23 @@ void TSBCore::createFragmentView(CreateViewContext* ctx) {
     m_tree->Bind(wxEVT_TREE_ITEM_ACTIVATED, &TSBCore::onTreeItemActivated, this);
 
     m_model = std::make_unique<LibraryModel>();
-}
-
-wxEvtHandler* TSBCore::getEventHandler() {
-    if (m_contentParent == nullptr) {
-        logerror("TSBCore::getEventHandler: m_contentParent is nullptr");
-        return nullptr;
-    }
-    return m_contentParent->GetEventHandler();
+    return m_splitter;
 }
 
 void TSBCore::openLibrary(const wxString& path) {
     std::string root(path.ToUTF8().data());
     if (!m_model->load(root)) {
-        wxMessageBox("Failed to load library. Ensure the directory contains .themestyles and "
-                     "theme/style folders.",
-                     "Error", wxOK | wxICON_ERROR, m_contentParent);
+        wxMessageBox(tr("Failed to load library. Ensure the directory contains .themestyles and "
+                        "theme/style folders."),
+                     tr("Error"), wxOK | wxICON_ERROR, m_contentParent);
         return;
     }
     wxWindow* w = m_contentParent;
     while (w && !dynamic_cast<wxFrame*>(w))
         w = w->GetParent();
     if (wxFrame* frame = dynamic_cast<wxFrame*>(w))
-        frame->SetTitle(
-            wxString::FromUTF8(("Theme Style Browser - " + m_model->getLibraryRoot()).c_str()));
+        frame->SetTitle(tr("Theme Style Browser - ") +
+                        wxString::FromUTF8(m_model->getLibraryRoot().c_str()));
     buildPackageTree();
     m_style_visible.clear();
     m_style_visible.resize(m_model->getThemeStyles().size(), true);
@@ -273,7 +276,7 @@ std::vector<PackagePath> TSBCore::getSortedDirectChildren(const PackagePath& par
 
 void TSBCore::buildPackageTree() {
     m_tree->DeleteAllItems();
-    wxTreeItemId rootId = m_tree->AddRoot("Library");
+    wxTreeItemId rootId = m_tree->AddRoot(tr("Library"));
     std::map<PackagePath, wxTreeItemId> nodeMap;
     nodeMap[{}] = rootId;
 
@@ -389,9 +392,9 @@ void TSBCore::refreshFileList() {
         for (int c = 3; c < cols; ++c)
             m_grid->SetColSize(c, 56);  // width for wrapped style header (e.g. "flex\nregular")
     }
-    m_grid->SetColLabelValue(COL_NAME, "Name");
-    m_grid->SetColLabelValue(COL_COUNT, "Count");
-    m_grid->SetColLabelValue(COL_SIZE, "Size");
+    m_grid->SetColLabelValue(COL_NAME, tr("Name"));
+    m_grid->SetColLabelValue(COL_COUNT, tr("Count"));
+    m_grid->SetColLabelValue(COL_SIZE, tr("Size"));
     for (size_t i = 0; i < m_visible_styles.size(); ++i) {
         wxString label = wxString::FromUTF8(m_visible_styles[i].c_str());
         label.Replace("/", "\n", true);  // word-wrap style ids like "flex/regular" in header
@@ -500,14 +503,14 @@ void TSBCore::onGridCellRightClick(wxGridEvent& e) {
     int col = e.GetCol();
     wxMenu menu;
     if (col == COL_NAME) {
-        menu.Append(ID_DELETE_ITEM, "Delete item group");
-        menu.Append(ID_RENAME_ITEM, "Rename item (F2)");
+        menu.Append(ID_DELETE_ITEM, tr("Delete item group"));
+        menu.Append(ID_RENAME_ITEM, tr("Rename item (F2)"));
     } else {
         int styleIdx = getStyleColumnIndex(col);
         if (styleIdx >= 0) {
             wxString val = m_grid->GetCellValue(row, col);
             if (val != "-")
-                menu.Append(ID_DELETE_IMAGE, "Delete image");
+                menu.Append(ID_DELETE_IMAGE, tr("Delete image"));
         }
     }
     if (menu.GetMenuItemCount() > 0)
@@ -541,7 +544,8 @@ void TSBCore::onGridLabelRightClick(wxGridEvent& e) {
             }
             if (idx_in_all < m_style_visible.size()) {
                 int id = ID_COL_VIS_BASE + static_cast<int>(idx_in_all);
-                menu.Append(id, "Hide column '" + wxString::FromUTF8(styleId.c_str()) + "'");
+                menu.Append(id, wxString::Format(tr("Hide column '%s'"),
+                                                 wxString::FromUTF8(styleId.c_str())));
                 menu.Bind(wxEVT_MENU, [this](wxCommandEvent& e) { onColVisibilityMenu(e); });
                 m_grid->PopupMenu(&menu, e.GetPosition());
             }
@@ -582,7 +586,8 @@ void TSBCore::onColVisibilityMenu(wxCommandEvent& e) {
 }
 
 void TSBCore::onOpenLibrary(PerformContext*) {
-    wxDirDialog dlg(m_contentParent, "Select library root (directory containing .themestyles)",
+    wxDirDialog dlg(m_contentParent,
+                    tr("Select library root (directory containing .themestyles)"),
                     wxEmptyString, wxDD_DIR_MUST_EXIST);
     if (dlg.ShowModal() != wxID_OK)
         return;
@@ -598,21 +603,21 @@ void TSBCore::onExit(PerformContext*) {
 }
 
 void TSBCore::onDeleteImage(wxCommandEvent&) {
-    wxMessageBox("Delete image: not implemented yet.", "Info", wxOK, m_contentParent);
+    wxMessageBox(tr("Delete image: not implemented yet."), tr("Info"), wxOK, m_contentParent);
 }
 
 void TSBCore::onDeleteItem(wxCommandEvent&) {
-    wxMessageBox("Delete item group: not implemented yet.", "Info", wxOK, m_contentParent);
+    wxMessageBox(tr("Delete item group: not implemented yet."), tr("Info"), wxOK, m_contentParent);
 }
 
 void TSBCore::onRenameItem(wxCommandEvent&) {
-    wxMessageBox("Rename item: not implemented yet (F2).", "Info", wxOK, m_contentParent);
+    wxMessageBox(tr("Rename item: not implemented yet (F2)."), tr("Info"), wxOK, m_contentParent);
 }
 
 void TSBCore::showImageProperty(const ImageEntry* ie) {
     if (!ie)
         return;
-    ImagePropertiesDialog dlg(m_contentParent, "Image Property",
+    ImagePropertiesDialog dlg(m_contentParent, tr("Image Property"),
                               wxString::FromUTF8(ie->rel_path.c_str()), ie);
     dlg.ShowModal();
 }
@@ -620,7 +625,7 @@ void TSBCore::showImageProperty(const ImageEntry* ie) {
 void TSBCore::showItemProperty(const FileItem* item) {
     if (!item)
         return;
-    ItemPropertiesDialog dlg(m_contentParent, "Item Property",
+    ItemPropertiesDialog dlg(m_contentParent, tr("Item Property"),
                              wxString::FromUTF8(item->name.c_str()), item);
     dlg.ShowModal();
 }
