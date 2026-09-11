@@ -1,3 +1,9 @@
+themestylebrowser (1.0.2) testing; urgency=medium
+
+  * Fix runtime Depends/Requires: libbas-c1, libbas-cpp1, libbas-ui1 (not *0).
+
+ -- Lenik (谢继雷) <lenik@bodz.net>  Fri, 11 Sep 2026 17:10:00 +0800
+
 themestylebrowser (1.0.1) testing; urgency=medium
 
   * Fix Meson wxWidgets ABI detection via wx-config --release (3.0 and 3.2+).

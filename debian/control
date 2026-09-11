@@ -25,9 +25,9 @@ Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
- libbas-c0,
- libbas-cpp0,
- libbas-ui0,
+ libbas-c1,
+ libbas-cpp1,
+ libbas-ui1,
  libwxgtk3.2-1t64
      | libwxgtk3.2-1
      | libwxgtk3.0-gtk3-0v5

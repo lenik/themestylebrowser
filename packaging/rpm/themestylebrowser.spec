@@ -22,9 +22,9 @@ BuildRequires:  libbas-cpp-dev
 BuildRequires:  libbas-ui-dev
 BuildRequires:  libwxgtk3.2-dev
 BuildRequires:  asciidoctor
-Requires:       libbas-c0
-Requires:       libbas-cpp0
-Requires:       libbas-ui0
+Requires:       libbas-c1
+Requires:       libbas-cpp1
+Requires:       libbas-ui1
 Requires:       libwxgtk3.2-1t64
 
 %description
