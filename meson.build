@@ -30,7 +30,6 @@ bindir = prefix / get_option('bindir')
 datadir = prefix / get_option('datadir')
 mandir = prefix / get_option('mandir')
 localedir = prefix / get_option('localedir')
-pkgdatadir = datadir / meson.project_name()
 pkgdocdir = datadir / 'doc' / meson.project_name()
 
 config_h = configuration_data()
