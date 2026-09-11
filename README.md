@@ -54,7 +54,7 @@ pixel
 
 ## Build
 
-- **Dependencies:** meson, ninja, pkg-config, libbas-c, libbas-cpp, libbas-ui, wxWidgets (GTK3).
+- **Dependencies:** meson, ninja, pkg-config, asciidoctor, libbas-c, libbas-cpp, libbas-ui, wxWidgets GTK3 (3.0 or 3.2+).
 - **Build:**
   ```bash
   meson setup build && meson compile -C build

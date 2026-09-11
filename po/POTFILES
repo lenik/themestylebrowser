@@ -1,0 +1,4 @@
+src/main.cpp
+src/tsb/TSBFrame.cpp
+src/tsb/ImageProperties.cpp
+src/tsb/ItemProperties.cpp
